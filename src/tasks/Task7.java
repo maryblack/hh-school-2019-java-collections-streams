@@ -14,7 +14,11 @@ import java.util.Set;
 public class Task7 implements Task {
 
   private Set<String> vacancyNames(Collection<Company> companies) {
-    return new HashSet<>();
+    var vacancies = new HashSet<String>();
+    companies.forEach(company -> company.getVacancies()
+            .forEach(vacancy -> vacancies.add(vacancy.getTitle())));
+
+    return vacancies;
   }
 
   @Override

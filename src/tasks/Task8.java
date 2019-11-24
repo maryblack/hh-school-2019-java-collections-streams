@@ -31,12 +31,16 @@ public class Task8 implements Task {
       return Collections.emptyList();
     }
     persons.remove(0);
-    return persons.stream().map(Person::getFirstName).collect(Collectors.toList());
+    return persons.stream()
+            .map(Person::getFirstName)
+            .collect(Collectors.toList());
   }
 
   //ну и различные имена тоже хочется
   public Set<String> getDifferentNames(List<Person> persons) {
-    return getNames(persons).stream().distinct().collect(Collectors.toSet());
+    return getNames(persons).stream()
+            .distinct()
+            .collect(Collectors.toSet());
   }
 
   //Для фронтов выдадим полное имя, а то сами не могут

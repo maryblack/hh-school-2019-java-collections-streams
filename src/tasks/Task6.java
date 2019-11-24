@@ -5,11 +5,7 @@ import common.Person;
 import common.Task;
 
 import java.time.Instant;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /*
 Имеются
@@ -23,18 +19,38 @@ public class Task6 implements Task {
   private Set<String> getPersonDescriptions(Collection<Person> persons,
                                             Map<Integer, Set<Integer>> personAreaIds,
                                             Collection<Area> areas) {
-    return new HashSet<>();
+    var regions = new HashSet<String>();
+
+    var areaMap = new HashMap<Integer, String>();
+    areas.forEach(area -> areaMap.put(area.getId(), area.getName()));
+
+    persons.forEach(person -> {
+      personAreaIds.get(person.getId())
+              .forEach(areaId -> {
+                        regions.add(person.getFirstName() + " - " + areaMap.get(areaId));
+                      }
+              );
+    });
+
+    return regions;
   }
 
   @Override
   public boolean check() {
     List<Person> persons = List.of(
-        new Person(1, "Oleg", Instant.now()),
-        new Person(2, "Vasya", Instant.now())
+            new Person(1, "Oleg", Instant.now()),
+            new Person(2, "Vasya", Instant.now())
     );
-    Map<Integer, Set<Integer>> personAreaIds = Map.of(1, Set.of(1, 2), 2, Set.of(2, 3));
-    List<Area> areas = List.of(new Area(1, "Moscow"), new Area(2, "Spb"), new Area(3, "Ivanovo"));
+    Map<Integer, Set<Integer>> personAreaIds = Map.of(
+            1, Set.of(1, 2),
+            2, Set.of(2, 3)
+    );
+    List<Area> areas = List.of(
+            new Area(1, "Moscow"),
+            new Area(2, "Spb"),
+            new Area(3, "Ivanovo")
+    );
     return getPersonDescriptions(persons, personAreaIds, areas)
-        .equals(Set.of("Oleg - Moscow", "Oleg - Spb", "Vasya - Spb", "Vasya - Ivanovo"));
+            .equals(Set.of("Oleg - Moscow", "Oleg - Spb", "Vasya - Spb", "Vasya - Ivanovo"));
   }
 }

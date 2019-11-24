@@ -4,6 +4,7 @@ import common.Person;
 import common.PersonService;
 import common.Task;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -19,8 +20,17 @@ public class Task1 implements Task {
 
   // !!! Редактируйте этот метод !!!
   private List<Person> findOrderedPersons(List<Integer> personIds) {
-    Set<Person> persons = PersonService.findPersons(personIds);
-    return Collections.emptyList();
+    var personsOrdered = new ArrayList<Person>();
+    var persons = PersonService.findPersons(personIds);
+
+    personIds.forEach(personId ->
+            persons.forEach(person -> {
+              if (person.getId().equals(personId)) {
+                personsOrdered.add(person);
+              }
+            }));
+
+    return personsOrdered;
   }
 
   @Override
@@ -28,9 +38,9 @@ public class Task1 implements Task {
     List<Integer> ids = List.of(1, 2, 3);
 
     return findOrderedPersons(ids).stream()
-        .map(Person::getId)
-        .collect(Collectors.toList())
-        .equals(ids);
+            .map(Person::getId)
+            .collect(Collectors.toList())
+            .equals(ids);
   }
 
 }
