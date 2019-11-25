@@ -5,9 +5,7 @@ import common.PersonService;
 import common.Task;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /*
@@ -18,7 +16,7 @@ import java.util.stream.Collectors;
  */
 public class Task1 implements Task {
 
-  // !!! Редактируйте этот метод !!!
+    // асимптотика O(n^2)
   private List<Person> findOrderedPersons(List<Integer> personIds) {
     var personsOrdered = new ArrayList<Person>();
     var persons = PersonService.findPersons(personIds);

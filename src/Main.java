@@ -1,12 +1,5 @@
 import common.Task;
-import tasks.Task1;
-import tasks.Task2;
-import tasks.Task3;
-import tasks.Task4;
-import tasks.Task5;
-import tasks.Task6;
-import tasks.Task7;
-import tasks.Task8;
+import tasks.*;
 
 import java.util.List;
 
