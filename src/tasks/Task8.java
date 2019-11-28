@@ -9,8 +9,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /*
 А теперь о горьком
@@ -37,20 +39,10 @@ public class Task8 implements Task {
   }
 
   //Для фронтов выдадим полное имя, а то сами не могут
-  public static String convertPersonToString(Person person) {
-    String result = "";
-    if (person.getSecondName() != null) {
-      result += person.getSecondName();
-    }
-
-    if (person.getFirstName() != null) {
-      result += " " + person.getFirstName();
-    }
-
-    if (person.getMiddleName() != null) {
-      result += " " + person.getMiddleName();
-    }
-    return result;
+  public String convertPersonToString(Person person) {
+     return Stream.of(person.getSecondName(), person.getFirstName(), person.getMiddleName())
+            .filter(Objects::nonNull)
+            .collect(Collectors.joining(" "));
   }
 
   // словарь id персоны -> ее имя
@@ -66,7 +58,7 @@ public class Task8 implements Task {
 
   // есть ли совпадающие в двух коллекциях персоны?
   public boolean hasSamePersons(Collection<Person> persons1, Collection<Person> persons2) {
-    return Collections.disjoint(persons1, persons2);
+    return Collections.disjoint(new HashSet<>(persons1), persons2);
   }
 
 
