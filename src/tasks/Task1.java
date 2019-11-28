@@ -4,7 +4,6 @@ import common.Person;
 import common.PersonService;
 import common.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,19 +15,14 @@ import java.util.stream.Collectors;
  */
 public class Task1 implements Task {
 
-    // асимптотика O(n^2)
+    // асимптотика O(n)
   private List<Person> findOrderedPersons(List<Integer> personIds) {
-    var personsOrdered = new ArrayList<Person>();
-    var persons = PersonService.findPersons(personIds);
+    var personIdToPerson = PersonService.findPersons(personIds).stream()
+            .collect(Collectors.toMap(Person::getId, person -> person));
 
-    personIds.forEach(personId ->
-            persons.forEach(person -> {
-              if (person.getId().equals(personId)) {
-                personsOrdered.add(person);
-              }
-            }));
-
-    return personsOrdered;
+    return personIds.stream()
+            .map(id -> personIdToPerson.get(id))
+            .collect(Collectors.toList());
   }
 
   @Override
