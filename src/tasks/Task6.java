@@ -5,7 +5,12 @@ import common.Person;
 import common.Task;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /*
 Имеются
@@ -16,24 +21,24 @@ import java.util.*;
  */
 public class Task6 implements Task {
 
-  private Set<String> getPersonDescriptions(Collection<Person> persons,
-                                            Map<Integer, Set<Integer>> personAreaIds,
-                                            Collection<Area> areas) {
-    var regions = new HashSet<String>();
+    private Set<String> getPersonDescriptions(Collection<Person> persons,
+                                              Map<Integer, Set<Integer>> personAreaIds,
+                                              Collection<Area> areas) {
+        var regions = new HashSet<String>();
 
-    var areaMap = new HashMap<Integer, String>();
-    areas.forEach(area -> areaMap.put(area.getId(), area.getName()));
+        var areaNames = areas.stream().collect(Collectors.toMap(Area::getId, Area::getName));
 
-    persons.forEach(person -> {
-      personAreaIds.get(person.getId())
-              .forEach(areaId -> {
-                        regions.add(person.getFirstName() + " - " + areaMap.get(areaId));
-                      }
-              );
-    });
+        persons.forEach(person -> {
+            if (personAreaIds.containsKey(person.getId())) {
+                personAreaIds.get(person.getId()).forEach(areaId -> {
+                            regions.add(person.getFirstName() + " - " + areaNames.get(areaId));
+                        }
+                );
+            };
+        });
 
-    return regions;
-  }
+        return regions;
+    }
 
   @Override
   public boolean check() {

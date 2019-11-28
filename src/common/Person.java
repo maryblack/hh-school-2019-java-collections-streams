@@ -87,14 +87,4 @@ public class Person {
   public int hashCode() {
     return Objects.hash(id, firstName, secondName, middleName, createdAt);
   }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id-" + id +
-                "firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
-                ", createdAt=" + createdAt +
-                '}';
-    }
 }
